@@ -1,0 +1,9 @@
+<div class="row col-12" style="align-content: center;">
+  <h1>Landing Page. Fashion Classifier</h1>
+</div>
+
+<div class="row col-12" style="align-content: center;" *ngFor="let pic of images_from_server">
+  <div class="widget-user-image">
+    <img class="img-circle profile-image" src="{{sys_file_url}}{{ pic.file }}" alt="User Avatar">
+  </div>
+</div>

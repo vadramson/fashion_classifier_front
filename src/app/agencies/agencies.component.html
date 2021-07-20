@@ -1,0 +1,61 @@
+<div class="row col-12">
+  <form role="form" id="quickForm" (ngSubmit)="addAgence()">
+    <div class="form-group col-4">
+      <label>Agence</label>
+      <input type="text" class="form-control" name="agence" placeholder="Agence"
+             [(ngModel)]="agenceData.agency"/>
+    </div>
+    <div class="form-group col-4">
+      <label>Code</label>
+      <input type="text" class="form-control" name="code" placeholder="Code"
+             [(ngModel)]="agenceData.code"/>
+    </div>
+    <div class="form-group col-4">
+      <label>Town</label>
+      <select type="text" class="form-control" (change)="selectTown($event)" name="agence" placeholder="Agence"
+             [(ngModel)]="agenceData.town">
+        <option *ngFor="let ag of towns" [value]="ag.id">{{ag.town}}</option>
+      </select>
+    </div>
+    <div class="form-group col-4">
+      <label>Address</label>
+      <input type="text" class="form-control" name="address" placeholder="Address"
+             [(ngModel)]="agenceData.address"/>
+    </div>
+    <div class="form-group col-4">
+      <label>Telephone</label>
+      <input type="text" class="form-control" name="telephone" placeholder="Telephone"
+             [(ngModel)]="agenceData.telephone"/>
+    </div>
+    <div class="form-group col-4">
+      <label>Email</label>
+      <input type="email" class="form-control" name="telephone" placeholder="Email"
+             [(ngModel)]="agenceData.email"/>
+    </div>
+
+    <div class="form-group col-4">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
+
+<div class="row col-12">
+  <table class="table table-bordered table-active">
+    <tr>
+      <th>Angence</th>
+      <th>Code</th>
+      <th>Ville</th>
+      <th>Telephone</th>
+      <th>Address</th>
+      <th>Email</th>
+    </tr>
+    <tr *ngFor = "let ag of agences">
+      <td>{{ag.agency}}</td>
+      <td>{{ag.code}}</td>
+      <td>{{ag.name_town}}</td>
+      <td>{{ag.telephone}}</td>
+      <td>{{ag.address}}</td>
+      <td>{{ag.email}}</td>
+    </tr>
+  </table>
+</div>
