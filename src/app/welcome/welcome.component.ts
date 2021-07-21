@@ -31,8 +31,10 @@ export class WelcomeComponent implements OnInit {
   datasent = {"some":"data"}
 
   getImages(){
-    this.external.postData(this.datasent, 'get_uploaded_images/').subscribe((data: any) => {
-      this.images_from_server = data.fashion_images
+    // this.external.postData(this.datasent, 'get_uploaded_images/').subscribe((data: any) => {
+    this.external.postData(this.datasent, 'get_uploaded_clothing_images/').subscribe((data: any) => {
+      // this.images_from_server = data.fashion_images
+      this.images_from_server = data.fashion_clothing_images
       console.log("Data from server" + this.images_from_server)
     })
   }

@@ -2,8 +2,29 @@
   <h1>Landing Page. Fashion Classifier</h1>
 </div>
 
-<div class="row col-12" style="align-content: center;" *ngFor="let pic of images_from_server">
-  <div class="widget-user-image">
-    <img class="img-circle profile-image" src="{{sys_file_url}}{{ pic.file }}" alt="User Avatar">
+<div class="col-12" style="align-content: center;" *ngFor="let pic of images_from_server">
+<div class="card border-success col-3" style="max-width: 18rem; max-height: 32rem;">
+  <div class="card-header bg-transparent border-success">Header</div>
+  <div class="card-body text-success">
+    <img class="img-fluid img-thumbnail rounded float-left" src="{{sys_file_url}}{{ pic.file }}" alt="User Avatar">
   </div>
+  <div class="card-footer bg-transparent border-success">
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="card-group">
+  <div class="card col-3 border-success" style="max-width: 18rem; max-height: 32rem;">
+    <img class="card-img-top img-fluid img-thumbnail rounded float-left" src="{{sys_file_url}}{{ pic.file }}" alt="User Avatar">
+    <div class="card-body">
+      <h5 class="card-title">Card title</h5>
+      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+    </div>
+    </div>
+</div>
 </div>

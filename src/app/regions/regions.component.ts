@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApiCommService} from "../services/api-comm.service";
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-regions',
@@ -10,7 +11,7 @@ import {ApiCommService} from "../services/api-comm.service";
 })
 export class RegionsComponent implements OnInit {
   responseData: any;
-  regionsDta = {"region":"", "code": "", "token": localStorage.getItem('token')}
+  regionsDta = {"region": "", "code": "", "token": localStorage.getItem('token')}
   tokenData = {"token": localStorage.getItem('token')}
 
   DJANGO_SERVER = 'http://127.0.0.1:8000'
@@ -33,7 +34,7 @@ export class RegionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-     this.form = this.formBuilder.group({
+    this.form = this.formBuilder.group({
       profile: ['', Validators.required],
       price: "",
       clothing_description: ['', Validators.required],
@@ -52,7 +53,7 @@ export class RegionsComponent implements OnInit {
     }
   }
 
-  showMe:boolean=false;
+  showMe: boolean = false;
 
   onCategoryChangeYes(event) {
     this.showMe = false;
@@ -71,7 +72,9 @@ export class RegionsComponent implements OnInit {
   }
 
   // convenience getter for easy access to form fields
-    get f() { return this.form.controls; }
+  get f() {
+    return this.form.controls;
+  }
 
   onSubmit() {
     const formData = new FormData();
@@ -99,28 +102,27 @@ export class RegionsComponent implements OnInit {
     );
   }
 
-onFinalSubmit(){
+  onFinalSubmit() {
     console.log("Final Submit")
     console.log("Category ->" + this.final_form.get('category').value)
 
-  const finalFormData = new FormData();
+    const finalFormData = new FormData();
 
-   this.cat_default = this.final_form.get('category').value
-  if(!this.cat_default){
-    this.cat_default_value = this.true_prediction_class
-  }
-  else{
-    this.cat_default_value = this.cat_default
-  }
+    this.cat_default = this.final_form.get('category').value
+    if (!this.cat_default) {
+      this.cat_default_value = this.true_prediction_class
+    } else {
+      this.cat_default_value = this.cat_default
+    }
 
-   if(this.true_prediction_class == this.cat_default_value){
+    if (this.true_prediction_class == this.cat_default_value) {
       this.true_predict = 1
-    }else{
+    } else {
       this.true_predict = 0
     }
-    console.log("true_predict "+ this.true_predict)
+    console.log("true_predict " + this.true_predict)
 
-  console.log("Category ->" + this.cat_default_value)
+    console.log("Category ->" + this.cat_default_value)
 
     finalFormData.append('prediction_class', this.true_prediction_class);
     finalFormData.append('image_id', this.image_id);
@@ -128,18 +130,48 @@ onFinalSubmit(){
     finalFormData.append('corrected_prediction', this.cat_default_value);
     finalFormData.append('accuracy_of_prediction', this.max_proba);
 
-    console.log("finalFormData "+ finalFormData)
+    console.log("finalFormData " + finalFormData)
     // console.log("true_predict "+ finalFormData.value)
 
 
-  this.apiExternal.clothing_saved(finalFormData).subscribe((data) => {
-      this.data_from_server = data.saved
-      console.log("Data from server" + this.data_from_server)
-      if(this.data_from_server){
-        alert("Cloth Uploaded successfully!")
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this action!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, save it!'
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+        this.apiExternal.clothing_saved(finalFormData).subscribe((data) => {
+          this.data_from_server = data.saved
+          console.log("Data from server" + this.data_from_server)
+          if (this.data_from_server) {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              imageUrl: this.imageURL,
+              title: 'Your posting has been saved',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            this.router.navigate([''])
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong! Try again Later',
+              // footer: '<a href="">Why do I have this issue?</a>'
+            })
+          }
+        })
+
       }
     })
-}
+
+  }
 
 
 }
