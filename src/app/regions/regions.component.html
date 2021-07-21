@@ -1,40 +1,87 @@
 <div class="row col-12">
-  <h1>Upload your cloths to the site</h1>
+  <div class="jumbotron text-center">
+    <h4 class="display-7">
+      Upload your cloths to the site
+    </h4>
+  </div>
 
-  <div *ngIf="response && imageURL" class="form-group col-12">
-    <div class="col-6">
-      <img [src]='imageURL'/>
-    </div>
-    <div class="col-6">
-      <h3> Our AI has predicted this cloth to be a {{prediction_class}} with {{max_proba}}% Accuracy </h3>
-      Do you wish to continue ?
+    <div *ngIf="response && imageURL" class="form-group col-12">
+<!--  <div class="form-group col-12">-->
+    <div class="row">
+      <div class="col-6">
+        <img [src]='imageURL'/>
+      </div>
+      <div class="col-6">
+        <h6> Our AI has predicted this cloth to be a <b> {{prediction_class}} </b> with <b> {{max_proba}}% </b> Accuracy </h6>
+        <form [formGroup]="final_form" (ngSubmit)="onFinalSubmit()">
+          <div class="form-group col-6">
+            <div class="group-gap">
+              <h6 class="mb-3">Is the category correct?</h6>
+              <div class="d-block my-3">
+
+                <div class="custom-control custom-radio">
+                  <input id="yes" type="radio" class="custom-control-input" value="yes" name="category_ok"
+                         formControlName="category_ok" (change)="onCategoryChangeYes($event)">&nbsp;&nbsp;
+                  <label class="custom-control-label" for="yes">Yes</label>
+                </div>
+
+                <div class="custom-control custom-radio">
+                  <input id="no" type="radio" class="custom-control-input" value="no" name="category_ok"
+                         formControlName="category_ok" (change)="onCategoryChangeNo($event)">&nbsp;&nbsp;
+                  <label class="custom-control-label" for="no">No</label>
+                </div>
+                <div class="form-group col-12 custom-control-input" *ngIf="showMe == true ">
+                  <label for="cat">Choose the right Category</label>
+                  <select id="cat" formControlName="category" class="form-control" name="category"
+                          (change)="onChangeofOptions($event)">
+                    <option value="dress">Dress</option>
+                    <option value="hat">Hat</option>
+                    <option value="longsleeve">Longsleeve</option>
+                    <option value="outwear">Outwear</option>
+                    <option value="pants">Pants</option>
+                    <option value="shirt">Shirt</option>
+                    <option value="shoes">Shoes</option>
+                    <option value="shorts">Shorts</option>
+                    <option value="skirt">Skirt</option>
+                    <option value="t-shirt">T-shirt</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-12">
+            <br/>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 
- <div *ngIf="!response && !imageURL">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="form-group col-5">
-<!--      <label for="name">Name: </label>-->
-<!--<input id="name" type="text" [formControl]="name">-->
-      <label for="price">Price €</label>
-      <input id="price" type="number" name="price" class="form-control" formControlName="price"/>
-<!--      <input id="price" type="number" name="price" [(ngModel)]="cloth.price" class="form-control"/>-->
-    </div>
-    <div class="form-group col-5">
-      <label for="profile">Cloths</label>
-      <input id="profile" type="file" name="profile" class="form-control" (change)="onChange($event)"/>
-    </div>
-    <div class="form-group col-10">
-      <label for="clothing_description">Description</label>
-      <textarea id="clothing_description" name="clothing_description" class="form-control" formControlName="clothing_description">
+  <div *ngIf="!response && !imageURL" class="form-group col-12">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="form-group col-6">
+          <label for="price">Price €</label>
+          <input id="price" type="number" name="price" class="form-control" formControlName="price"/>
+        </div>
+        <div class="form-group col-6">
+          <label for="profile">Cloths</label>
+          <input id="profile" type="file" name="profile" class="form-control" (change)="onChange($event)"/>
+        </div>
+      </div>
+      <div class="form-group col-12">
+        <label for="clothing_description">Description</label>
+        <textarea id="clothing_description" name="clothing_description" class="form-control"
+                  formControlName="clothing_description">
       </textarea>
-    </div>
-    <div class="form-group col-4">
-      <br />
-      <button type="submit" class="btn btn-primary">Upload Image File</button>
-    </div>
-  </form>
- </div>
+      </div>
+      <div class="form-group col-4">
+        <br/>
+        <button type="submit" class="btn btn-outline-warning">Upload Image File</button>
+      </div>
+    </form>
+  </div>
 </div>
 
 
