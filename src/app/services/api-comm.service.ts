@@ -26,7 +26,8 @@ export class ApiCommService {
 
   public upload_image(formData) {
   // public upload_image(formData, url) {
-    return this.http.post<any>(`${this.api_root}upload_images/`, formData);
+  //   return this.http.post<any>(`${this.api_root}upload_images/`, formData);
+    return this.http.post<any>(`${this.api_root}save_clothings/`, formData);
     // return this.http.post<any>(this.api_root+url, formData);
   }
 
