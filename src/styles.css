@@ -255,13 +255,19 @@ body .btn-danger:hover {
   font-weight: 400;
 }
 
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+}
+
 
 /*Stakblizt Style Ends Here*/
 
 
 /* You can add global styles to this file, and also import other style files */
 .main-container{
-  margin-top: 10%;
+  margin-top: 5%;
   margin-left: 5%;
 }
 
